@@ -15,8 +15,8 @@ class NicknameViewController: UIViewController {
     let nicknameTextField = SignTextField(placeholderText: "닉네임을 입력해주세요")
     let nextButton = PointButton(title: "다음")
     
-    let nickname = BehaviorSubject(value: "")
-    let buttonHidden = BehaviorSubject(value: true)
+    let viewModel = NicknameViewModel()
+    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -33,19 +33,14 @@ class NicknameViewController: UIViewController {
     
     func bind() {
         
-        buttonHidden.bind(to: nextButton.rx.isHidden)
+        viewModel.buttonHidden.bind(to: nextButton.rx.isHidden)
             .disposed(by: disposeBag)
         
         nicknameTextField.rx.text.orEmpty
-            .bind(to: nickname)
+            .bind(to: viewModel.nickname)
             .disposed(by: disposeBag)
         
-        nickname.map { $0.count > 2 && $0.count <= 6 }
-            .subscribe(with: self) { owner, value in
-                print(value)
-                owner.buttonHidden.onNext(!value)
-            }
-            .disposed(by: disposeBag)
+
         
     }
     

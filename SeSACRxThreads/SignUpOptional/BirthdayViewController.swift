@@ -68,12 +68,8 @@ class BirthdayViewController: UIViewController {
   
     let nextButton = PointButton(title: "가입하기")
     
-    let birthDay = BehaviorSubject(value: Date.now)
-    let year = BehaviorSubject(value: 1998)
-    let month = BehaviorSubject(value: 7)
-    let day = BehaviorSubject(value: 25)
-    let buttonEnalbed = BehaviorSubject(value: false)
-    
+    let viewModel = BirthdayViewModel()
+
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -98,29 +94,21 @@ class BirthdayViewController: UIViewController {
 //            .disposed(by: disposeBag)
         
         birthDayPicker.rx.date
-            .bind(to: birthDay)
+            .bind(to: viewModel.birthDay)
             .disposed(by: disposeBag)
+
         
-        birthDay
-            .subscribe(with: self) { owner, date in
-                let component = Calendar.current.dateComponents([.year, .month, .day], from: date)
-                owner.year.onNext(component.year!)
-                owner.month.onNext(component.month!)
-                owner.day.onNext(component.day!)
-            }
-            .disposed(by: disposeBag)
-        
-        year
+        viewModel.year
             .map { "\($0)년" }
             .bind(to: yearLabel.rx.text)
             .disposed(by: disposeBag)
         
-        month
+        viewModel.month
             .map { "\($0)월"}
             .bind(to: monthLabel.rx.text)
             .disposed(by: disposeBag)
         
-        day
+        viewModel.day
             .subscribe(with: self) { owner, value in
                 owner.dayLabel.text = "\(value)일"
             }

@@ -14,11 +14,10 @@ class PhoneViewController: UIViewController {
    
     let phoneTextField = SignTextField(placeholderText: "연락처를 입력해주세요")
     let nextButton = PointButton(title: "다음")
+    let viewModel = PhoneViewModel()
     
-    let disposeBag = DisposeBag()
-    let phoneNumber = BehaviorSubject(value: "010")
     let buttonColor = BehaviorSubject(value: UIColor.red)
-    let buttonEnabled = BehaviorSubject(value: false)
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,14 +55,14 @@ class PhoneViewController: UIViewController {
     
     func bind() {
         
-        phoneNumber
+        viewModel.phoneNumber
             .bind(to: phoneTextField.rx.text)
             .disposed(by: disposeBag)
         
         phoneTextField.rx.text.orEmpty
             .subscribe(with: self, onNext: { owner, value in
                 let result = value.formated(by: "###-####-####")
-                owner.phoneNumber.onNext(result)
+                owner.viewModel.phoneNumber.onNext(result)
             })
             .disposed(by: disposeBag)
         
@@ -75,16 +74,18 @@ class PhoneViewController: UIViewController {
             .bind(to: phoneTextField.layer.rx.borderColor)
             .disposed(by: disposeBag)
         
-        buttonEnabled.bind(to: nextButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
-        phoneNumber.map { $0.count > 10 }
+        viewModel.phoneNumber.map { $0.count > 10 }
             .subscribe(with: self) { owner, value in
                 let color = value ? UIColor.blue : UIColor.red
                 owner.buttonColor.onNext(color)
-                owner.buttonEnabled.onNext(value)
             }
             .disposed(by: disposeBag)
+        
+        
+        viewModel.buttonEnabled.bind(to: nextButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+
     }
 
 }
