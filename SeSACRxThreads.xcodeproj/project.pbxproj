@@ -31,6 +31,7 @@
 		F46CDEF12AF4D8BE005064C8 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46CDEEF2AF4D8BD005064C8 /* SearchTableViewCell.swift */; };
 		F46CDEF22AF4D8BE005064C8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46CDEF02AF4D8BD005064C8 /* SearchViewController.swift */; };
 		F4832B832AF29C8700F2F41F /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4832B822AF29C8700F2F41F /* Extension+String.swift */; };
+		F49ED4F32AF6A881003A8B1B /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49ED4F22AF6A881003A8B1B /* SearchViewModel.swift */; };
 		F4EE24CD2AF3DFD600AEB1E0 /* BirthdayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EE24CC2AF3DFD600AEB1E0 /* BirthdayViewModel.swift */; };
 		F4EE24D02AF3E0AB00AEB1E0 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EE24CF2AF3E0AB00AEB1E0 /* NicknameViewModel.swift */; };
 		F4EE24D22AF3E15100AEB1E0 /* PhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EE24D12AF3E15100AEB1E0 /* PhoneViewModel.swift */; };
@@ -79,6 +80,7 @@
 		F46CDEEF2AF4D8BD005064C8 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		F46CDEF02AF4D8BD005064C8 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		F4832B822AF29C8700F2F41F /* Extension+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
+		F49ED4F22AF6A881003A8B1B /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		F4EE24CC2AF3DFD600AEB1E0 /* BirthdayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewModel.swift; sourceTree = "<group>"; };
 		F4EE24CF2AF3E0AB00AEB1E0 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		F4EE24D12AF3E15100AEB1E0 /* PhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewModel.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			children = (
 				F46CDEEF2AF4D8BD005064C8 /* SearchTableViewCell.swift */,
 				F46CDEF02AF4D8BD005064C8 /* SearchViewController.swift */,
+				F49ED4F22AF6A881003A8B1B /* SearchViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				041280652AEFA2F000972552 /* SignTextField.swift in Sources */,
 				F46CDEF22AF4D8BE005064C8 /* SearchViewController.swift in Sources */,
 				0412806C2AEFABFE00972552 /* PasswordViewController.swift in Sources */,
+				F49ED4F32AF6A881003A8B1B /* SearchViewModel.swift in Sources */,
 				F4EE24D02AF3E0AB00AEB1E0 /* NicknameViewModel.swift in Sources */,
 				041280562AEFA04800972552 /* SignInViewController.swift in Sources */,
 				041280282AEF9BAB00972552 /* ViewController.swift in Sources */,

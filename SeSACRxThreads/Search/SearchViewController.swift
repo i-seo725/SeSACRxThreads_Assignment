@@ -32,10 +32,8 @@ class SearchViewController: UIViewController {
      }()
     
     let searchBar = UISearchBar()
-     
-    var data = ["A", "AB", "AC", "B", "BD", "DC", "DA", "C"]
-    lazy var items = BehaviorSubject(value: data)
-    
+    let viewModel = SearchViewModel()
+   
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -50,7 +48,7 @@ class SearchViewController: UIViewController {
      
     func bind() {
         
-        items
+        viewModel.items
             .bind(to: tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
                 cell.appNameLabel.text = element
                 cell.appIconImageView.backgroundColor = .green
@@ -66,26 +64,10 @@ class SearchViewController: UIViewController {
             .map { "\($0) \($1) 셀 선택" }
             .bind(to: navigationItem.rx.title)
             .disposed(by: disposeBag)
-
-        searchBar.rx.searchButtonClicked
-            .withLatestFrom(searchBar.rx.text.orEmpty) { _, text in
-                return text
-            }
-            .subscribe(with: self) { owner, text in
-                owner.data.insert(text, at: 0)
-                owner.items.onNext(owner.data)
-            }
-            .disposed(by: disposeBag)
         
-        searchBar.rx.text.orEmpty
-            .debounce(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .subscribe(with: self) { owner, text in
-                let result = text == "" ? owner.data : owner.data.filter { $0.contains(text) }
-                owner.items.onNext(result)
-                print("실시간 검색 중 == \(text)")
-            }
-            .disposed(by: disposeBag)
+        viewModel.searchButtonClicked(event: searchBar.rx.searchButtonClicked, text: searchBar.rx.text.orEmpty)
+        
+        viewModel.searchTextSearched(keyword: searchBar.rx.text.orEmpty)
     }
     
     private func setSearchController() {
