@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class SignInViewController: UIViewController {
 
@@ -14,6 +16,9 @@ class SignInViewController: UIViewController {
     let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요")
     let signInButton = PointButton(title: "로그인")
     let signUpButton = UIButton()
+    
+    let viewModel = SignInViewModel()
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +29,35 @@ class SignInViewController: UIViewController {
         configure()
         
         signUpButton.addTarget(self, action: #selector(signUpButtonClicked), for: .touchUpInside)
+        
+        bind()
+    }
+    
+    func bind() {
+        
+        viewModel.password = passwordTextField.rx.text.orEmpty
+        viewModel.email = emailTextField.rx.text.orEmpty
+        
+        
+        
+        viewModel.validation
+            .subscribe(with: self) { owner, value in
+                owner.signInButton.backgroundColor = value ? UIColor.blue : UIColor.red
+                owner.emailTextField.layer.borderColor = value ? UIColor.blue.cgColor : UIColor.red.cgColor
+                owner.passwordTextField.layer.borderColor = value ? UIColor.blue.cgColor : UIColor.red.cgColor
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.validation
+            .bind(to: signInButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        signInButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.navigationController?.pushViewController(SearchViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     @objc func signUpButtonClicked() {
